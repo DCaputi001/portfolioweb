@@ -1,0 +1,491 @@
+<!--
+  resume.html — Full career history, education, and credentials (Portfolio Site)
+
+  Purpose:
+    The deep-dive career page aimed at hiring managers and recruiters.
+    Contains the complete work history with expanded context, both degrees,
+    all certifications and awards, and a downloadable PDF resume button.
+
+  Page flow (top → bottom):
+    Nav → Page Hero (+ PDF download) → Experience → Education →
+    Certifications & Awards → Footer
+
+  Dependencies (CDN only — no build step required):
+    - Google Fonts: Syne, DM Mono, DM Sans — via styles.css
+    - styles.css: portfolio-specific dark teal design system
+    - script.js: scroll animations + mobile nav toggle
+
+  TODO: Drop resume.pdf into this folder to activate the PDF download button.
+  Author: Diego Caputi
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Diego Caputi — Resume &amp; Experience</title>
+
+<!-- Preconnect cuts DNS + TLS latency for Google Fonts before the stylesheet request fires -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<!-- Portfolio-specific dark teal design system -->
+<link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────────────────────────
+     NAV
+     Cross-page navigation. "Experience" link gets nav-active.
+───────────────────────────────────────────────────────────── -->
+<nav id="main-nav">
+  <a href="index.html" class="nav-logo">Diego<span>.</span></a>
+
+  <!-- On mobile this list is hidden until the hamburger button adds class "open" -->
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="resume.html" class="nav-active">Experience</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <a href="DC_CV.pdf" download class="nav-resume">Resume ↓</a>
+    <a href="index.html#contact" class="nav-cta">Hire Me</a>
+
+    <!-- Three <span> bars animate into an X via CSS when class "open" is added by JS -->
+    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─────────────────────────────────────────────────────────────
+     PAGE HERO
+     Compact header with the PDF download as a primary CTA.
+───────────────────────────────────────────────────────────── -->
+<section class="page-hero">
+  <!-- Decorative 60×60px teal grid overlay at 3% opacity -->
+  <div class="hero-grid-bg"></div>
+  <p class="section-tag">// Career history</p>
+  <h1 class="page-hero-title">Resume &amp; <em>Experience</em></h1>
+  <!-- Primary CTA: download resume PDF. Ghost CTA: navigate to contact form -->
+  <div class="page-hero-actions">
+    <a href="DC_CV.pdf" download class="btn-primary">Download PDF ↓</a>
+    <a href="index.html#contact" class="btn-ghost">Hire Me</a>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     EXPERIENCE
+     Vertical timeline: four roles, newest first.
+     Timeline line: CSS border-right of .exp-left.
+     Dot marker: ::after pseudo-element centered on that border.
+───────────────────────────────────────────────────────────── -->
+<section class="experience-bg" id="experience">
+  <div class="section-header fade-up">
+    <p class="section-tag">// Where I've been</p>
+    <h2 class="section-title">Experience</h2>
+  </div>
+
+  <div class="timeline">
+
+    <!-- ── Ilash and Skincare — Jan 2018–Present ── -->
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <p class="exp-period">Jan 2018 — Present</p>
+        <p class="exp-company">Ilash and Skincare</p>
+        <p class="exp-location">Miami, FL</p>
+      </div>
+      <div class="exp-right">
+        <h3 class="exp-title">Operations Manager &amp; Technical Lead</h3>
+        <ul class="exp-bullets">
+          <li>Designed and shipped a full-stack appointment scheduling and service management platform (React, RESTful API, PostgreSQL) used daily by staff and clients — owned the full lifecycle from requirements to deployment</li>
+          <li>Led operations, marketing, IT, and software development simultaneously — 99% of deliverables completed on schedule</li>
+          <li>Implemented RBAC and Row Level Security to protect sensitive customer data across multi-role access patterns</li>
+          <li>Continuously audited and monitored system logs to ensure system integrity and availability</li>
+          <li>Established clear timelines for new service rollouts, achieving 95% adherence to strategic goals</li>
+          <li>Led full company rebranding and executed targeted marketing campaigns — 25% increase in service uptake from targeted demographics</li>
+          <li>Introduced and implemented a new membership program, increasing foot traffic and recurring revenue</li>
+          <li>Redesigned and deployed company website, resulting in a 30% increase in online conversion rate</li>
+          <li>Developed new online service offerings during COVID-19, contributing to a 90%+ client return rate on reopening</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">React</span><span class="tag">PostgreSQL</span><span class="tag">RBAC / RLS</span>
+          <span class="tag">IT Infrastructure</span><span class="tag">M365</span><span class="tag">Team Leadership</span>
+          <span class="tag">Web Dev</span><span class="tag">Marketing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Independent / Freelance — Jan 2023–Present ── -->
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <p class="exp-period">Jan 2023 — Present</p>
+        <p class="exp-company">Independent / Freelance</p>
+        <p class="exp-location">Remote · Miami, FL</p>
+      </div>
+      <div class="exp-right">
+        <h3 class="exp-title">Software Engineer &amp; Security Consultant</h3>
+        <ul class="exp-bullets">
+          <li>Design, build, and ship production full-stack applications from loosely defined requirements to deployed outcomes — no oversight required</li>
+          <li>Provide IT and cybersecurity consulting to SMBs: security gap analysis, infrastructure assessments, policy development, and contract software development</li>
+          <li>AI-native development as standard practice: Claude Code, GitHub Copilot, and OpenAI tooling across planning, scaffolding, development, testing, and documentation</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Full-Stack Dev</span><span class="tag">Security Consulting</span>
+          <span class="tag">OWASP</span><span class="tag">AI-Native Dev</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Salty Miami — 2020–2023 ── -->
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <p class="exp-period">2020 — 2023</p>
+        <p class="exp-company">Salty Miami</p>
+        <p class="exp-location">Miami, FL</p>
+      </div>
+      <div class="exp-right">
+        <h3 class="exp-title">Customer Relations / Marketing Director / Captain</h3>
+        <ul class="exp-bullets">
+          <li>Redesigned the company website with a UX focus — achieved a 90% booking rate over 12 months</li>
+          <li>Developed customer feedback initiatives leading to service improvements and a boost in positive online reviews</li>
+          <li>Designed and launched new revenue programs including summer camps and corporate events</li>
+          <li>Developed and delivered staff training programs leading to a 60% repeat customer rate</li>
+          <li>Captained and operated vessels, managing guest safety, logistics, and overall customer experience</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Web Design</span><span class="tag">Marketing</span>
+          <span class="tag">Operations</span><span class="tag">UX</span>
+          <span class="tag">Staff Training</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SailLaser Miami — 2009–2013 ── -->
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <p class="exp-period">2009 — 2013</p>
+        <p class="exp-company">SailLaser Miami</p>
+        <p class="exp-location">Miami, FL</p>
+      </div>
+      <div class="exp-right">
+        <h3 class="exp-title">Sailing Instructor / Program Coordinator / Sales</h3>
+        <ul class="exp-bullets">
+          <li>Certified sailing instructor managing group and individual lessons for all skill levels</li>
+          <li>Promoted to Program Coordinator (Summer 2012) — designed and led youth sailing programs for children aged 5–16</li>
+          <li>Joined the sales team for smart sailboats: product demonstration, client relationship management, and closing</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Instruction</span><span class="tag">Program Design</span>
+          <span class="tag">Sales</span><span class="tag">Youth Programs</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     SKILLS
+     Full technical stack broken into 10 categories, plus spoken languages.
+───────────────────────────────────────────────────────────── -->
+<section id="skills" class="services-bg">
+  <div class="section-header fade-up">
+    <p class="section-tag">// Technical skills</p>
+    <h2 class="section-title">Stack &amp; Tools</h2>
+  </div>
+
+  <div class="about-grid">
+
+    <!-- Left column: core engineering skills -->
+    <div class="fade-up">
+
+      <div class="skills-group">
+        <p class="skills-group-title">Frontend</p>
+        <div class="skills-list">
+          <span class="skill-chip">React 18</span>
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">Next.js</span>
+          <span class="skill-chip">Angular</span>
+          <span class="skill-chip">JavaScript (ES6+)</span>
+          <span class="skill-chip">HTML5</span>
+          <span class="skill-chip">CSS3</span>
+          <span class="skill-chip">Tailwind CSS</span>
+          <span class="skill-chip">Vite</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Backend</p>
+        <div class="skills-list">
+          <span class="skill-chip">Node.js</span>
+          <span class="skill-chip">Fastify</span>
+          <span class="skill-chip">Express</span>
+          <span class="skill-chip">Python / Flask</span>
+          <span class="skill-chip">REST APIs</span>
+          <span class="skill-chip">GraphQL</span>
+          <span class="skill-chip">WebSockets</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Mobile</p>
+        <div class="skills-list">
+          <span class="skill-chip">Kotlin</span>
+          <span class="skill-chip">Jetpack Compose</span>
+          <span class="skill-chip">MVVM</span>
+          <span class="skill-chip">Clean Architecture</span>
+          <span class="skill-chip">Firebase Auth</span>
+          <span class="skill-chip">ML Kit</span>
+          <span class="skill-chip">RevenueCat SDK</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Databases</p>
+        <div class="skills-list">
+          <span class="skill-chip">PostgreSQL</span>
+          <span class="skill-chip">Supabase</span>
+          <span class="skill-chip">Firebase Firestore</span>
+          <span class="skill-chip">MySQL</span>
+          <span class="skill-chip">MongoDB</span>
+          <span class="skill-chip">Azure SQL</span>
+          <span class="skill-chip">Row Level Security</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Security</p>
+        <div class="skills-list">
+          <span class="skill-chip">OWASP Top 10</span>
+          <span class="skill-chip">RBAC / RLS</span>
+          <span class="skill-chip">JWT / MFA / TOTP</span>
+          <span class="skill-chip">Secure SDLC</span>
+          <span class="skill-chip">Audit Logging</span>
+          <span class="skill-chip">HMAC Webhook Security</span>
+          <span class="skill-chip">Input Validation</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right column: tooling, infra, operations, and spoken languages -->
+    <div class="fade-up">
+
+      <div class="skills-group">
+        <p class="skills-group-title">Cloud &amp; DevOps</p>
+        <div class="skills-list">
+          <span class="skill-chip">AWS (S3 · CloudFront)</span>
+          <span class="skill-chip">Microsoft Azure</span>
+          <span class="skill-chip">Netlify</span>
+          <span class="skill-chip">Railway</span>
+          <span class="skill-chip">Supabase</span>
+          <span class="skill-chip">Git / GitHub</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">AI &amp; Tools</p>
+        <div class="skills-list">
+          <span class="skill-chip">Claude Code</span>
+          <span class="skill-chip">GitHub Copilot</span>
+          <span class="skill-chip">OpenAI API (GPT-4o)</span>
+          <span class="skill-chip">ElevenLabs</span>
+          <span class="skill-chip">Twilio</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Testing</p>
+        <div class="skills-list">
+          <span class="skill-chip">Unit Testing</span>
+          <span class="skill-chip">Integration Testing</span>
+          <span class="skill-chip">TypeScript Strict Mode</span>
+          <span class="skill-chip">ESLint</span>
+          <span class="skill-chip">Manual QA</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Operations</p>
+        <div class="skills-list">
+          <span class="skill-chip">IT Infrastructure</span>
+          <span class="skill-chip">Process Design</span>
+          <span class="skill-chip">Team Training</span>
+          <span class="skill-chip">Microsoft 365</span>
+          <span class="skill-chip">POS / CRM Systems</span>
+          <span class="skill-chip">Google Analytics</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Programming Languages</p>
+        <div class="skills-list">
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">JavaScript (ES6+)</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">Kotlin</span>
+          <span class="skill-chip">HTML5 / CSS3</span>
+          <span class="skill-chip">Java (familiar)</span>
+        </div>
+      </div>
+
+      <div class="skills-group">
+        <p class="skills-group-title">Spoken Languages</p>
+        <div class="lang-list">
+          <div class="lang-item">
+            <span class="lang-name">English</span>
+            <span class="lang-level">Native</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">Spanish</span>
+            <span class="lang-level">Native</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">French</span>
+            <span class="lang-level">Intermediate</span>
+          </div>
+          <div class="lang-item">
+            <span class="lang-name">German</span>
+            <span class="lang-level">Intermediate</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     EDUCATION
+     Two-column grid of degree cards.
+───────────────────────────────────────────────────────────── -->
+<section id="education">
+  <div class="section-header fade-up">
+    <p class="section-tag">// Academic background</p>
+    <h2 class="section-title">Education</h2>
+  </div>
+
+  <div class="education-grid fade-up">
+
+    <!-- B.S. Computer Science — Information Security -->
+    <div class="education-card">
+      <p class="edu-degree">B.S. Computer Science — Information Security</p>
+      <p class="edu-school">Southern New Hampshire University</p>
+      <div class="edu-meta">
+        <span class="edu-badge">December 2025</span>
+        <span class="edu-badge">GPA: 4.0</span>
+        <span class="edu-badge">Summa Cum Laude</span>
+      </div>
+      <p class="edu-coursework-label">Relevant Coursework</p>
+      <div class="service-tags">
+        <span class="tag">Secure SDLC</span>
+        <span class="tag">Application Security</span>
+        <span class="tag">Software Engineering</span>
+        <span class="tag">Client-Server Systems</span>
+        <span class="tag">Software Testing &amp; QA</span>
+        <span class="tag">Data Structures &amp; Algorithms</span>
+        <span class="tag">System Analysis &amp; Design</span>
+      </div>
+    </div>
+
+    <!-- A.S. Cybersecurity -->
+    <div class="education-card">
+      <p class="edu-degree">A.S. Cybersecurity</p>
+      <p class="edu-school">Southern New Hampshire University</p>
+      <div class="edu-meta">
+        <span class="edu-badge">May 2024</span>
+        <span class="edu-badge">GPA: 4.0</span>
+      </div>
+      <p class="edu-coursework-label">Relevant Coursework</p>
+      <div class="service-tags">
+        <span class="tag">Cyber Defense</span>
+        <span class="tag">Systems Security</span>
+        <span class="tag">Secure Application Development</span>
+        <span class="tag">Legal &amp; Human Factors of Cybersecurity</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     CERTIFICATIONS & AWARDS
+     Vertical list of award cards on a dark elevated surface.
+     services-bg provides the elevated dark background.
+───────────────────────────────────────────────────────────── -->
+<section id="certifications" class="services-bg">
+  <div class="section-header fade-up">
+    <p class="section-tag">// Credentials &amp; recognition</p>
+    <h2 class="section-title">Certifications &amp; Awards</h2>
+  </div>
+
+  <div class="awards-grid fade-up">
+
+    <!-- CompTIA Security+ -->
+    <div class="award-card">
+      <div class="award-icon">🔒</div>
+      <div class="award-body">
+        <p class="award-title">CompTIA Security+</p>
+        <p class="award-meta">May 2026</p>
+      </div>
+      <span class="award-badge">Credly Verified ✓</span>
+    </div>
+
+    <!-- Atlassian Agile PM Certificate -->
+    <div class="award-card">
+      <div class="award-icon">📋</div>
+      <div class="award-body">
+        <p class="award-title">Agile Project Management Professional Certificate</p>
+        <p class="award-meta">September 2024 · Atlassian</p>
+      </div>
+    </div>
+
+    <!-- Hackathon award — amber accent signals achievement -->
+    <div class="award-card">
+      <div class="award-icon amber">🏆</div>
+      <div class="award-body">
+        <p class="award-title">6th Place Overall &amp; Best Startup</p>
+        <p class="award-meta">World's Largest Hackathon presented by Bolt — 100,000+ submissions</p>
+      </div>
+      <span class="award-badge">Bolt · 2025</span>
+    </div>
+
+    <!-- President's List — multiple semesters -->
+    <div class="award-card">
+      <div class="award-icon">⭐</div>
+      <div class="award-body">
+        <p class="award-title">President's List</p>
+        <p class="award-meta">Summer 2023 · Fall 2023 · Spring 2023 · Summer 2024 · Fall 2024 · Spring 2024</p>
+      </div>
+      <span class="award-badge">SNHU</span>
+    </div>
+
+    <!-- Summa Cum Laude -->
+    <div class="award-card">
+      <div class="award-icon">🎓</div>
+      <div class="award-body">
+        <p class="award-title">Summa Cum Laude</p>
+        <p class="award-meta">B.S. Computer Science, Information Security · SNHU · December 2025</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p class="footer-name">Diego<span>.</span>Caputi</p>
+  <p>Miami, FL &nbsp;·&nbsp; Available Remote &nbsp;·&nbsp; D.Caputi001@gmail.com</p>
+</footer>
+
+<!-- Shared interactivity: scroll animations + mobile nav toggle -->
+<script src="script.js"></script>
+
+</body>
+</html>

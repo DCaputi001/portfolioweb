@@ -1,0 +1,42 @@
+# ─── Personal source documents ───────────────────────────────
+# Word docs — source material, not needed to run the site
+*.docx
+*.doc
+
+# Internal planning and pricing notes — not for public repos
+services_pricing.md
+web_design_pricing.md
+website_design_recommendations.md
+site-plan.md
+
+# Draft / WIP files
+business_card_final_vA.html
+
+# Claude Code working directory
+.claude/
+
+# ─── Secrets & environment variables ─────────────────────────
+.env
+.env.local
+.env.*.local
+*.env
+
+# ─── OS artifacts ─────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ─── Editor & IDE ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+*.suo
+*.user
+
+# ─── Node / build tools (if added later) ─────────────────────
+node_modules/
+dist/
+.cache/
+.parcel-cache/

@@ -1,0 +1,400 @@
+<!--
+  index.html — Diego Caputi Personal Portfolio
+
+  Single-page site showcasing engineering projects and professional background.
+  Audience: technical hiring managers, recruiters, developer community.
+
+  Page flow (top → bottom):
+    Hero → Projects → Contact → Footer
+    (About → about.html | Resume/Experience → resume.html)
+
+  Theme: Full dark teal throughout.
+  See styles.css for design tokens and component documentation.
+
+  Dependencies (CDN only — no build step required):
+    - Google Fonts: Syne, DM Mono, DM Sans
+    - Formspree: delivers contact form submissions to email (free tier)
+
+  Before going live:
+    1. resume.pdf      → drop into this folder to enable the Resume ↓ button
+    2. YOUR_FORM_ID    → sign up at https://formspree.io, paste endpoint into <form action>
+    3. href="#" on project link buttons → replace with real GitHub, DevPost, and live demo URLs
+
+  Deployment: GitHub Pages — push folder contents to DCaputi001.github.io or a /portfolio repo.
+  Author: Diego Caputi
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Diego Caputi — Software Engineer &amp; Security Pro</title>
+
+<!-- Preconnect cuts DNS + TLS latency for Google Fonts before the stylesheet request fires -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<!-- Portfolio-specific dark teal design system -->
+<link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────────────────────────
+     NAV
+     Fixed header with smooth-scroll anchor links. Resume ↓ uses
+     the HTML download attribute to trigger a file download.
+───────────────────────────────────────────────────────────── -->
+<nav id="main-nav">
+  <a href="index.html" class="nav-logo">Diego<span>.</span></a>
+
+  <!-- On mobile this list is hidden until the hamburger button adds class "open" -->
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html" class="nav-active">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="resume.html">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <!-- TODO: Drop resume.pdf into this folder to enable the download button -->
+    <a href="DC_CV.pdf" download class="nav-resume">Resume ↓</a>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+
+    <!-- Three <span> bars animate into an X via CSS when class "open" is added by JS -->
+    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─────────────────────────────────────────────────────────────
+     HERO
+     Left: headline and CTAs. Right: stats panel with key numbers
+     and credentials. hero-grid-bg is purely decorative.
+───────────────────────────────────────────────────────────── -->
+<section class="hero" id="home">
+  <!-- Decorative 60×60px teal grid overlay at 3% opacity -->
+  <div class="hero-grid-bg"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">Available for work — Miami &amp; Remote</div>
+    <h1>
+      Engineer.<br/>
+      Security Pro.<br/>
+      <em>Problem Solver.</em>
+    </h1>
+    <p class="hero-sub">
+      Full-stack software engineer and IT security consultant with 13+ years leading operations and shipping production software. I build systems that are secure, scalable, and actually useful.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Work With Me</a>
+      <a href="#projects" class="btn-ghost">View Projects</a>
+    </div>
+  </div>
+
+  <!-- Stats panel — fade-up triggers the scroll-in animation on load -->
+  <div class="hero-panel fade-up">
+    <p class="panel-label">// Profile snapshot</p>
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-num">13<span>+</span></div>
+        <div class="stat-label">Years operations &amp; tech leadership</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.0</div>
+        <div class="stat-label">GPA — B.S. Computer Science, Info Security</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6<span>th</span></div>
+        <div class="stat-label">Place overall &amp; Best Startup — World's Largest Hackathon, 100k+ submissions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4<span>×</span></div>
+        <div class="stat-label">Languages spoken (EN, ES, FR, DE)</div>
+      </div>
+    </div>
+    <hr class="panel-divider" />
+    <!-- Credential rows -->
+    <div class="cert-row">
+      <div class="cert-dot"></div>
+      <span class="cert-name">CompTIA Security+</span>
+      <span class="cert-badge">Verified ✓</span>
+    </div>
+    <div class="cert-row">
+      <div class="cert-dot"></div>
+      <span class="cert-name">B.S. Computer Science — Info Security</span>
+      <span class="cert-badge">Summa Cum Laude</span>
+    </div>
+    <div class="cert-row">
+      <div class="cert-dot"></div>
+      <span class="cert-name">Agile PM Professional Certificate</span>
+      <span class="cert-badge">Atlassian</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     SERVICES
+     Three service cards on the dark elevated surface.
+───────────────────────────────────────────────────────────── -->
+<section id="services" class="services-bg">
+  <div class="section-header fade-up">
+    <p class="section-tag">// What I do</p>
+    <h2 class="section-title">Services</h2>
+  </div>
+
+  <div class="services-grid fade-up">
+
+    <div class="service-card">
+      <div class="service-icon">⚙</div>
+      <p class="service-title">Full-Stack Development</p>
+      <p class="service-desc">End-to-end web applications from requirements to production — React, Node.js, TypeScript, PostgreSQL. Secure by default, built to scale.</p>
+      <div class="service-tags">
+        <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">TypeScript</span>
+        <span class="tag">PostgreSQL</span><span class="tag">REST / GraphQL</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🔒</div>
+      <p class="service-title">IT Security Consulting</p>
+      <p class="service-desc">Security gap analysis, OWASP-based code reviews, RBAC/RLS implementation, and infrastructure assessments for small and mid-sized businesses.</p>
+      <div class="service-tags">
+        <span class="tag">OWASP Top 10</span><span class="tag">RBAC / RLS</span>
+        <span class="tag">CompTIA Security+</span><span class="tag">Audit Logging</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">🏗</div>
+      <p class="service-title">IT Operations &amp; Infrastructure</p>
+      <p class="service-desc">Microsoft 365 rollouts, IT infrastructure design, process documentation, and staff training — practical systems that actually get adopted.</p>
+      <div class="service-tags">
+        <span class="tag">Microsoft 365</span><span class="tag">Process Design</span>
+        <span class="tag">Team Training</span><span class="tag">Infrastructure</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     PROJECTS
+     CallVance is the featured (full-width) card with the hackathon
+     award badge and a metadata sidebar. The remaining four projects
+     fill a 2-column grid below it.
+
+     TODO: Replace all href="#" on project link buttons with real URLs:
+       - DevPost entry URL (CallVance)
+       - GitHub repository URLs (all projects)
+       - Live demo URL (CallVance, if available)
+───────────────────────────────────────────────────────────── -->
+<section id="projects">
+  <div class="section-header fade-up">
+    <p class="section-tag">// What I've built</p>
+    <h2 class="section-title">Projects</h2>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- ── CallVance — FEATURED (spans full width) ── -->
+    <div class="project-card featured fade-up">
+      <div class="project-body">
+        <div class="project-award">🏆 6th Place Overall &amp; Best Startup — 100,000+ submissions</div>
+        <h3 class="project-title">CallVance</h3>
+        <p class="project-desc">AI-powered appointment confirmation SaaS platform. Built end-to-end: React + TypeScript dashboard, Node.js/Fastify backend, real-time WebSocket event pipeline, and integrated OpenAI, ElevenLabs, and Twilio for autonomous voice confirmations. Multi-tenant RBAC enforced at the database layer using Row Level Security.</p>
+        <div class="project-stack">
+          <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">Fastify</span>
+          <span class="tag">PostgreSQL</span><span class="tag">WebSockets</span><span class="tag">OpenAI</span>
+          <span class="tag">ElevenLabs</span><span class="tag">Twilio</span><span class="tag">Supabase</span>
+        </div>
+        <div class="project-links">
+          <!-- TODO: Replace # with actual URLs before going live -->
+          <a href="https://devpost.com/software/callvance" class="project-link" target="_blank" rel="noopener">DevPost ↗</a>
+          <a href="#" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://callvance.net/" class="project-link ghost" target="_blank" rel="noopener">Live Demo ↗</a>
+        </div>
+      </div>
+      <!-- Metadata sidebar: only visible on the featured card layout -->
+      <div class="project-meta">
+        <div>
+          <p class="meta-label">Type</p>
+          <p class="meta-value">SaaS Platform</p>
+        </div>
+        <div>
+          <p class="meta-label">Stack</p>
+          <p class="meta-value">Full-Stack + AI</p>
+        </div>
+        <div>
+          <p class="meta-label">Deploy</p>
+          <p class="meta-value">Netlify · Railway · Supabase</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ShelfChef ── -->
+    <div class="project-card fade-up">
+      <h3 class="project-title">ShelfChef</h3>
+      <p class="project-desc">Native Android kitchen management app with AI-powered recipe generation from pantry items, barcode scanning via ML Kit, Firebase Auth, Firestore cloud sync, and a subscription paywall built with RevenueCat SDK.</p>
+      <div class="project-stack">
+        <span class="tag">Kotlin</span><span class="tag">Jetpack Compose</span><span class="tag">MVVM</span>
+        <span class="tag">Firebase</span><span class="tag">OpenAI</span><span class="tag">RevenueCat</span><span class="tag">ML Kit</span>
+      </div>
+      <div class="project-links">
+        <!-- TODO: Replace # with GitHub URL -->
+        <a href="https://dcaputi001.github.io/shelfchef_docs/index.html" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://devpost.com/software/shelfchef" class="project-link" target="_blank" rel="noopener">DevPost ↗</a>
+      </div>
+    </div>
+
+    <!-- ── Financial Planner ── -->
+    <div class="project-card fade-up">
+      <h3 class="project-title">Financial Planner</h3>
+      <p class="project-desc">Secure full-stack financial planning application with an Angular + TypeScript frontend, JWT authentication, MFA/TOTP support, role-based UI flows, and multi-user access — security built in from the architecture up.</p>
+      <div class="project-stack">
+        <span class="tag">Angular</span><span class="tag">TypeScript</span>
+        <span class="tag">JWT + MFA/TOTP</span><span class="tag">PostgreSQL</span><span class="tag">REST APIs</span>
+      </div>
+      <div class="project-links">
+        <!-- TODO: Replace # with GitHub URL -->
+        <a href="https://dcaputi001.github.io/index.html" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+
+    <!-- ── Payment Tracker ── -->
+    <div class="project-card fade-up">
+      <h3 class="project-title">Payment Tracker</h3>
+      <p class="project-desc">Full-stack business operations tool with filterable transaction tables, date-range navigation, and financial summary cards. Optimized with useMemo and component memoization. Server-side HTML report generation via Supabase Edge Functions with CORS and Row Level Security enforced.</p>
+      <div class="project-stack">
+        <span class="tag">React 18</span><span class="tag">TypeScript</span><span class="tag">Vite</span>
+        <span class="tag">Supabase</span><span class="tag">PostgreSQL</span><span class="tag">Edge Functions</span>
+      </div>
+      <div class="project-links">
+        <!-- TODO: Replace # with GitHub URL -->
+        <a href="https://github.com/DCaputi001/Payment_Tracker" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+
+    <!-- ── Medify ── -->
+    <div class="project-card fade-up">
+      <h3 class="project-title">Medify</h3>
+      <p class="project-desc">Full-stack medication tracker with dynamic scheduling, CSV data export, and secure authentication. Built with Python/Flask and deployed on Microsoft Azure App Services with an Azure SQL backend.</p>
+      <div class="project-stack">
+        <span class="tag">Python</span><span class="tag">Flask</span>
+        <span class="tag">Microsoft Azure</span><span class="tag">Azure SQL</span>
+      </div>
+      <div class="project-links">
+        <!-- TODO: Replace # with GitHub URL -->
+        <!--<a href="#" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>-->
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     CONTACT
+     Left column: intro copy + four clickable contact method rows.
+     Right column: Formspree-powered contact form.
+
+     FORM SETUP (Formspree — free tier, no backend required):
+       1. Sign up at https://formspree.io
+       2. Create a new form and copy the endpoint (looks like: xpwzabcd)
+       3. Replace YOUR_FORM_ID in the <form action> below
+───────────────────────────────────────────────────────────── -->
+<section class="contact-bg" id="contact">
+  <div class="contact-grid">
+
+    <div class="contact-intro fade-up">
+      <h2>Let's build something <em>real.</em></h2>
+      <p>Whether you need a full application built, a security audit, or help figuring out what's actually broken in your IT — I'm open to projects, consulting engagements, and full-time remote roles.</p>
+
+      <!-- Each row is an <a> so the entire card is clickable -->
+      <div class="contact-methods">
+        <a href="mailto:D.Caputi001@gmail.com" class="contact-method">
+          <div class="cm-icon">✉</div>
+          <div>
+            <p class="cm-label">Email</p>
+            <p class="cm-value">D.Caputi001@gmail.com</p>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/diego-caputi" target="_blank" rel="noopener" class="contact-method">
+          <div class="cm-icon">in</div>
+          <div>
+            <p class="cm-label">LinkedIn</p>
+            <p class="cm-value">linkedin.com/in/diego-caputi</p>
+          </div>
+        </a>
+        <a href="https://github.com/DCaputi001" target="_blank" rel="noopener" class="contact-method">
+          <div class="cm-icon" style="font-size:1.1rem;">⌥</div>
+          <div>
+            <p class="cm-label">GitHub</p>
+            <p class="cm-value">github.com/DCaputi001</p>
+          </div>
+        </a>
+       <!-- <a href="tel:+17862003262" class="contact-method">
+          <div class="cm-icon">☏</div>
+          <div>
+            <p class="cm-label">Phone</p>
+            <p class="cm-value">(786) 200-3262</p>
+          </div> -->
+        </a>
+      </div>
+    </div>
+
+    <!-- TODO: Replace YOUR_FORM_ID with the endpoint from your Formspree account -->
+    <form
+      class="contact-form fade-up"
+      id="contact-form"
+      action="https://formspree.io/f/YOUR_FORM_ID"
+      method="POST"
+    >
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="service">I need help with</label>
+        <select id="service" name="service">
+          <option value="">Select a service...</option>
+          <option>Full-Stack Web Development</option>
+          <option>Mobile App Development</option>
+          <option>IT Security Audit / Consulting</option>
+          <option>IT Infrastructure / Operations</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Tell me about your project</label>
+        <textarea id="message" name="message" placeholder="What are you building? What's broken? What does success look like?"></textarea>
+      </div>
+
+      <button type="submit" class="form-submit" id="form-btn">Send Message →</button>
+
+      <p id="form-success" style="display:none; color:var(--teal); font-size:0.85rem; font-family:var(--font-mono); margin-top:0.5rem;">// Message sent. I'll be in touch soon.</p>
+      <p id="form-error"   style="display:none; color:var(--red);  font-size:0.85rem; font-family:var(--font-mono); margin-top:0.5rem;">// Something went wrong. Email me directly at D.Caputi001@gmail.com.</p>
+    </form>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p class="footer-name">Diego<span>.</span>Caputi</p>
+  <p>Miami, FL &nbsp;·&nbsp; Available Remote &nbsp;·&nbsp; D.Caputi001@gmail.com</p>
+</footer>
+
+<!-- Interactivity: scroll animations, mobile nav, contact form -->
+<script src="script.js"></script>
+
+</body>
+</html>

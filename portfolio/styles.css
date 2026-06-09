@@ -1,0 +1,743 @@
+/*
+  styles.css — All visual styles for the Diego Caputi Personal Portfolio.
+
+  Usage:
+    <link rel="stylesheet" href="styles.css">
+    Include in the <head> of index.html, about.html, and resume.html.
+
+  Structure (in order):
+    1. Design Tokens  — CSS variables for colors, fonts, surfaces
+    2. Global Reset   — box-sizing, scroll behavior, body defaults
+    3. Nav            — fixed header with frosted-glass backdrop
+    4. Hero           — full-viewport two-column intro section
+    5. Shared Sections — padding, section tags, section titles
+    6. Projects       — two-column grid with featured full-width card
+    7. Experience     — vertical timeline layout
+    8. About          — two-column bio + skill chips
+    9. Contact        — two-column intro + form
+   10. Footer         — minimal bottom bar
+   11. Animations     — fade-up scroll-in effect
+   12. Responsive     — breakpoints at 1024px (tablet) and 900px (mobile)
+
+  Theme: Full dark teal throughout.
+  The portfolio audience is technical — recruiters and hiring managers
+  who expect a developer aesthetic. Consistent dark theme avoids
+  cognitive friction and keeps the focus on the work.
+
+  Author: Diego Caputi
+*/
+
+/* ─────────────────────────────────────────────────────────────
+   DESIGN TOKENS
+   All colors, surfaces, and fonts live here. Edit this section
+   to retheme the site without hunting through component CSS.
+───────────────────────────────────────────────────────────── */
+:root {
+  /* Background layers — darkest to lightest, used to create visual depth */
+  --bg: #080c12;        /* Page base: near-black with a cool blue tint           */
+  --surface: #0e1420;   /* Elevated sections: Services, Experience, Contact bg   */
+  --surface2: #141b28;  /* Tag/chip fills — one step lighter than surface        */
+
+  /* Brand color: teal — the primary accent used for CTAs, highlights, icons */
+  --teal: #00d4aa;
+  --teal-dim: #00906e;                   /* Subdued teal for arrows and subtle elements   */
+  --teal-glow: rgba(0, 212, 170, 0.12);  /* Translucent fill for icon boxes and badges    */
+
+  /* Typography hierarchy */
+  --text: #e8edf5;       /* Primary: near-white body copy                        */
+  --text-muted: #7a8799; /* Secondary: subtitles, descriptions, nav links        */
+  --text-dim: #3d4d5e;   /* Tertiary: labels, placeholders, timestamps           */
+
+  /* Borders */
+  --border: rgba(255,255,255,0.06);       /* Default: barely-visible dividers on dark bg  */
+  --border-bright: rgba(0,212,170,0.25);  /* Teal-tinted: used on hover states and focus  */
+
+  /* Semantic accent colors */
+  --red: #ff4d6d;    /* Error and form failure states                            */
+  --amber: #f5a623;  /* Award / achievement badges (hackathon trophy row)        */
+
+  /* Brand palette — stored here for reference; not used in the dark portfolio theme */
+  --navy: #0D2B55;
+  --coral: #E07A5F;
+  --coral-glow: rgba(224, 122, 95, 0.12);
+  --cream: #F5F2EC;
+  --charcoal: #3D3D3B;
+  --gold: #C9A84C;
+
+  /* Typefaces — all loaded from Google Fonts above */
+  --font-display: 'Syne', sans-serif;   /* Bold display headings, stat numbers          */
+  --font-body: 'DM Sans', sans-serif;   /* Readable paragraph text and UI copy          */
+  --font-mono: 'DM Mono', monospace;    /* Section tags, metadata labels, form labels   */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GLOBAL RESET
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* smooth scrolling for anchor navigation */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden; /* prevents horizontal scroll from absolutely-positioned decorative elements */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   NAV
+   Fixed at the top of the viewport. Uses backdrop-filter to
+   create a frosted-glass effect over any section scrolled behind it.
+───────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100; /* sits above hero grid bg and section content */
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 4rem;
+  background: rgba(8,12,18,0.88); /* semi-transparent so content below is hinted */
+  backdrop-filter: blur(16px);    /* frosted-glass blur — requires Chromium/Safari */
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 1.1rem; letter-spacing: -0.02em;
+  color: var(--text); text-decoration: none; flex-shrink: 0;
+}
+.nav-logo span { color: var(--teal); } /* teal period after "Diego" */
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-muted);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--teal); }
+.nav-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+
+/* Subtle secondary button for resume download */
+.nav-resume {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em;
+  padding: 0.45rem 1rem; border: 1px solid var(--border);
+  color: var(--text-muted); background: transparent;
+  border-radius: 4px; text-decoration: none; transition: all 0.2s;
+}
+.nav-resume:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+/* Primary nav CTA — teal to match the site's tech accent */
+.nav-cta {
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+  padding: 0.5rem 1.25rem; border: 1px solid var(--border-bright);
+  color: var(--teal); background: var(--teal-glow);
+  border-radius: 4px; text-decoration: none; transition: all 0.2s;
+}
+.nav-cta:hover { background: rgba(0,212,170,0.2); }
+
+/* Hamburger button — hidden on desktop, shown via media query at ≤900px */
+.nav-mobile-btn {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 0.4rem;
+}
+.nav-mobile-btn span {
+  display: block; width: 22px; height: 2px;
+  background: var(--text-muted); transition: all 0.3s;
+  border-radius: 1px;
+}
+/* Three-bar → X animation */
+.nav-mobile-btn.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-mobile-btn.open span:nth-child(2) { opacity: 0; }
+.nav-mobile-btn.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ─────────────────────────────────────────────────────────────
+   HERO
+   Full-viewport-height two-column section: tagline left,
+   stats/credentials panel right.
+───────────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 8rem 4rem 4rem; /* extra top padding to clear the fixed nav */
+  gap: 4rem; position: relative; overflow: hidden;
+}
+
+/* Soft radial teal glow in the upper-right corner */
+.hero::before {
+  content: ''; position: absolute; top: -20%; right: -10%;
+  width: 55%; height: 80%;
+  background: radial-gradient(ellipse at center, rgba(0,212,170,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* 60×60px teal grid at 3% opacity — tech aesthetic texture */
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none;
+}
+
+/* "Available for work" label above the headline */
+.hero-eyebrow {
+  font-family: var(--font-mono); font-size: 0.75rem; color: var(--teal);
+  letter-spacing: 0.15em; margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+/* CSS-injected 32px teal rule before the eyebrow text */
+.hero-eyebrow::before {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--teal);
+}
+
+/* clamp() keeps the headline readable from mobile to large desktop */
+.hero h1 {
+  font-family: var(--font-display); font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 800; line-height: 1.0; letter-spacing: -0.03em;
+  margin-bottom: 1.5rem; color: var(--text);
+}
+/* <em> repurposed for teal accent color; font-style:normal removes italic */
+.hero h1 em { font-style: normal; color: var(--teal); }
+
+.hero-sub {
+  font-size: 1.05rem; color: var(--text-muted);
+  line-height: 1.75; max-width: 480px; margin-bottom: 2.5rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Solid teal fill — primary conversion CTA */
+.btn-primary {
+  padding: 0.85rem 2rem; background: var(--teal); color: #080c12;
+  font-family: var(--font-body); font-weight: 500; font-size: 0.9rem;
+  letter-spacing: 0.02em; border: none; border-radius: 4px;
+  text-decoration: none; cursor: pointer; transition: all 0.2s;
+}
+.btn-primary:hover { background: #00f0c0; }
+
+/* Transparent with a subtle border — secondary action */
+.btn-ghost {
+  padding: 0.85rem 2rem; background: transparent; color: var(--text);
+  font-family: var(--font-body); font-weight: 400; font-size: 0.9rem;
+  border: 1px solid var(--border); border-radius: 4px;
+  text-decoration: none; cursor: pointer; transition: all 0.2s;
+}
+.btn-ghost:hover { border-color: rgba(255,255,255,0.2); }
+
+/* ── HERO STATS PANEL (right column) ── */
+.hero-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 2rem; position: relative;
+}
+/* 2px gradient accent stripe along the top edge */
+.hero-panel::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--teal), transparent);
+  border-radius: 12px 12px 0 0;
+}
+.panel-label {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.12em; color: var(--text-dim);
+  text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.stat-num {
+  font-family: var(--font-display); font-size: 2.2rem;
+  font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 0.25rem;
+}
+.stat-num span { color: var(--teal); font-size: 1.2rem; }
+.stat-label { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+
+.panel-divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+.cert-row {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+}
+.cert-row:last-child { border-bottom: none; }
+.cert-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+.cert-name { font-size: 0.85rem; color: var(--text); flex: 1; }
+.cert-badge {
+  font-family: var(--font-mono); font-size: 0.65rem; padding: 0.2rem 0.5rem;
+  border-radius: 3px; background: rgba(0,212,170,0.1); color: var(--teal);
+  border: 1px solid rgba(0,212,170,0.2);
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SHARED SECTION STYLES
+───────────────────────────────────────────────────────────── */
+section { padding: 6rem 4rem; }
+.section-header { margin-bottom: 3.5rem; }
+
+/* Monospace "// tag" label above each section title */
+.section-tag {
+  font-family: var(--font-mono); font-size: 0.7rem; color: var(--teal);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--font-display); font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--text);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SERVICES SECTION
+   Included for use on resume.html (certs) and about.html (skills).
+   Dark surface background consistent with the rest of the dark theme.
+───────────────────────────────────────────────────────────── */
+.services-bg { background: var(--surface); }
+.services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+.service-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 2rem;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.service-card:hover { border-color: var(--border-bright); transform: translateY(-3px); }
+
+/* Hidden teal gradient line at the card bottom — revealed on hover */
+.service-card::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--teal), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.service-card:hover::after { opacity: 1; }
+
+/* Icon box: teal glow fill and border */
+.service-icon {
+  width: 44px; height: 44px; background: var(--teal-glow);
+  border: 1px solid var(--border-bright); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; margin-bottom: 1.25rem; color: var(--teal);
+}
+.service-title {
+  font-family: var(--font-display); font-size: 1.1rem;
+  font-weight: 700; margin-bottom: 0.75rem; color: var(--text);
+}
+.service-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+/* Reusable monospace chip — tech stack tags throughout the site */
+.tag {
+  font-family: var(--font-mono); font-size: 0.65rem; padding: 0.25rem 0.6rem;
+  border-radius: 3px; background: var(--surface2); color: var(--text-muted);
+  border: 1px solid var(--border); letter-spacing: 0.05em;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROJECTS SECTION
+   2-column grid with the first project (CallVance) spanning
+   both columns as a featured card.
+───────────────────────────────────────────────────────────── */
+.projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+/* Base card — flex column so .project-links can be pushed to the bottom */
+.project-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 2rem;
+  transition: border-color 0.3s;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+/* Featured variant: spans full width, side-by-side layout */
+.project-card.featured {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start;
+}
+.project-card.featured .project-body { display: flex; flex-direction: column; }
+
+.project-card:hover { border-color: var(--border-bright); }
+
+/* Gold-tinted badge for the hackathon award */
+.project-award {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--amber);
+  background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+  padding: 0.25rem 0.6rem; border-radius: 3px; margin-bottom: 1rem; letter-spacing: 0.08em;
+}
+.project-title {
+  font-family: var(--font-display); font-size: 1.35rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.02em;
+}
+/* flex:1 lets the description grow to fill available space */
+.project-desc {
+  font-size: 0.875rem; color: var(--text-muted); line-height: 1.7;
+  margin-bottom: 1.25rem; flex: 1;
+}
+.project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+
+/* margin-top:auto pushes the link row to the card bottom */
+.project-links { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto; }
+
+/* Primary project link — teal-tinted */
+.project-link {
+  font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em;
+  padding: 0.35rem 0.85rem; border-radius: 4px;
+  border: 1px solid var(--border-bright);
+  color: var(--teal); background: var(--teal-glow);
+  text-decoration: none; transition: all 0.2s;
+}
+.project-link:hover { background: rgba(0,212,170,0.22); }
+
+/* Ghost variant for secondary links */
+.project-link.ghost {
+  border-color: var(--border); color: var(--text-muted); background: transparent;
+}
+.project-link.ghost:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+
+/* Metadata sidebar on the featured card */
+.project-meta { display: flex; flex-direction: column; gap: 1rem; min-width: 175px; }
+.meta-label {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-dim);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem;
+}
+.meta-value { font-size: 0.85rem; color: var(--text); }
+
+/* ─────────────────────────────────────────────────────────────
+   EXPERIENCE TIMELINE
+   Two-column layout: date/company left, role details right.
+   The vertical timeline line is the border-right of .exp-left.
+───────────────────────────────────────────────────────────── */
+.experience-bg { background: var(--surface); }
+.timeline { position: relative; }
+
+.exp-item {
+  display: grid;
+  grid-template-columns: 195px 1fr;
+  gap: 0 2.5rem; margin-bottom: 3.5rem;
+}
+.exp-item:last-child { margin-bottom: 0; }
+
+/* Left column: date, company, location */
+.exp-left {
+  text-align: right; padding-right: 2rem; padding-top: 0.25rem;
+  border-right: 1px solid var(--border-bright); /* THIS IS THE TIMELINE VERTICAL LINE */
+  position: relative;
+}
+
+/* Timeline dot: 10px circle centered over the border-right line.
+   right: -5px puts the dot center exactly on the 1px border. */
+.exp-left::after {
+  content: ''; position: absolute;
+  right: -5px; top: 0.4rem;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--teal);
+}
+
+.exp-period {
+  font-family: var(--font-mono); font-size: 0.72rem; color: var(--teal);
+  letter-spacing: 0.06em; margin-bottom: 0.4rem;
+}
+.exp-company { font-size: 0.85rem; color: var(--text); line-height: 1.4; margin-bottom: 0.2rem; }
+.exp-location { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; }
+
+/* Right column: role content */
+.exp-right { padding-left: 2rem; padding-bottom: 0.5rem; }
+.exp-title {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.85rem; letter-spacing: -0.01em;
+}
+
+/* Custom bullet list: teal "→" arrow via ::before */
+.exp-bullets { list-style: none; margin-bottom: 1rem; }
+.exp-bullets li {
+  font-size: 0.875rem; color: var(--text-muted); line-height: 1.75;
+  padding-left: 1.1rem; position: relative; margin-bottom: 0.2rem;
+}
+.exp-bullets li::before {
+  content: '→'; position: absolute; left: 0; color: var(--teal-dim);
+  font-size: 0.65rem; top: 0.35rem;
+}
+.exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+/* ─────────────────────────────────────────────────────────────
+   ABOUT SECTION
+───────────────────────────────────────────────────────────── */
+.about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 6rem; align-items: start; }
+.about-text p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1.25rem; }
+.about-text p strong { color: var(--text); font-weight: 500; }
+
+.skills-group { margin-bottom: 2rem; }
+.skills-group-title {
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--teal);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-chip {
+  font-size: 0.8rem; padding: 0.3rem 0.75rem; border-radius: 4px;
+  background: var(--surface2); color: var(--text); border: 1px solid var(--border);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CONTACT SECTION
+───────────────────────────────────────────────────────────── */
+.contact-bg { background: var(--surface); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+
+.contact-intro h2 {
+  font-family: var(--font-display); font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
+  color: var(--text); margin-bottom: 1.25rem;
+}
+/* Teal "real." accent — matches the site's primary brand color */
+.contact-intro h2 em { font-style: normal; color: var(--teal); }
+.contact-intro p { font-size: 1rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 2rem; }
+
+/* Clickable contact method rows */
+.contact-methods { display: flex; flex-direction: column; gap: 0.75rem; }
+.contact-method {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; text-decoration: none; transition: border-color 0.2s;
+}
+.contact-method:hover { border-color: var(--border-bright); }
+
+/* Small icon box to the left of each contact row */
+.cm-icon {
+  width: 36px; height: 36px; background: var(--teal-glow);
+  border: 1px solid var(--border-bright); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--teal); font-size: 0.95rem; flex-shrink: 0;
+  font-family: var(--font-display); font-weight: 700;
+}
+.cm-label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--font-mono); }
+.cm-value { font-size: 0.875rem; color: var(--text); }
+
+/* ── CONTACT FORM ── */
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* Unified dark-field look for all form controls */
+input, textarea, select {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; padding: 0.75rem 1rem;
+  color: var(--text); font-family: var(--font-body);
+  font-size: 0.9rem; outline: none; transition: border-color 0.2s; width: 100%;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--border-bright); }
+input::placeholder, textarea::placeholder { color: var(--text-dim); }
+select { appearance: none; cursor: pointer; }
+select option { background: var(--surface2); }
+textarea { resize: vertical; min-height: 130px; }
+
+/* Teal submit button — matches nav CTA for visual consistency */
+.form-submit {
+  padding: 0.9rem 2rem; background: var(--teal); color: #080c12;
+  font-family: var(--font-display); font-weight: 700; font-size: 0.9rem;
+  letter-spacing: 0.02em; border: none; border-radius: 4px;
+  cursor: pointer; transition: all 0.2s; align-self: flex-start;
+}
+.form-submit:hover { background: #00f0c0; }
+.form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ─────────────────────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────────────────────── */
+footer {
+  padding: 2rem 4rem; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-name { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; color: var(--text-muted); }
+.footer-name span { color: var(--teal); } /* teal period in "Diego.Caputi" */
+footer p { font-size: 0.8rem; color: var(--text-dim); }
+
+/* ─────────────────────────────────────────────────────────────
+   SCROLL-IN ANIMATIONS
+   Elements start hidden and shifted 24px downward.
+   JS IntersectionObserver adds '.visible' when element enters viewport.
+───────────────────────────────────────────────────────────── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   ACTIVE NAV LINK
+───────────────────────────────────────────────────────────── */
+.nav-links a.nav-active { color: var(--teal); }
+
+/* ─────────────────────────────────────────────────────────────
+   PAGE HERO (about.html, resume.html)
+   Compact header — not full-viewport like the home hero.
+───────────────────────────────────────────────────────────── */
+.page-hero {
+  background: var(--surface);
+  padding: 7rem 4rem 3rem;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.page-hero::before {
+  content: ''; position: absolute; top: -30%; right: -5%;
+  width: 40%; height: 120%;
+  background: radial-gradient(ellipse at center, rgba(0,212,170,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 3.8rem);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;
+  color: var(--text); margin-top: 0.5rem;
+}
+.page-hero-title em { font-style: normal; color: var(--teal); }
+.page-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+
+/* ─────────────────────────────────────────────────────────────
+   LANGUAGE PROFICIENCY ROWS (about.html)
+───────────────────────────────────────────────────────────── */
+.lang-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.lang-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.6rem 0.9rem;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+}
+.lang-name { font-size: 0.875rem; color: var(--text); font-weight: 500; }
+.lang-level {
+  font-family: var(--font-mono); font-size: 0.65rem;
+  letter-spacing: 0.1em; color: var(--teal); text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   WORK PHILOSOPHY BOX (about.html)
+───────────────────────────────────────────────────────────── */
+.philosophy-box {
+  margin-top: 1.5rem; padding: 1.25rem 1.5rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--teal); /* teal left accent stripe */
+  border-radius: 0 8px 8px 0;
+}
+.philosophy-box-label {
+  font-family: var(--font-mono); font-size: 0.62rem; color: var(--teal);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.philosophy-traits { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* ─────────────────────────────────────────────────────────────
+   EDUCATION CARDS (resume.html)
+───────────────────────────────────────────────────────────── */
+.education-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.education-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 2rem; position: relative; overflow: hidden;
+  transition: border-color 0.3s;
+}
+.education-card:hover { border-color: var(--border-bright); }
+/* 2px teal gradient stripe along the top edge */
+.education-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--teal), transparent);
+  border-radius: 10px 10px 0 0;
+}
+.edu-degree {
+  font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.25rem; letter-spacing: -0.01em;
+}
+.edu-school { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.edu-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+.edu-badge {
+  font-family: var(--font-mono); font-size: 0.62rem; padding: 0.2rem 0.55rem;
+  border-radius: 3px; background: rgba(0,212,170,0.1); color: var(--teal);
+  border: 1px solid rgba(0,212,170,0.2); letter-spacing: 0.06em;
+}
+.edu-coursework-label {
+  font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-dim);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CERTIFICATIONS & AWARDS CARDS (resume.html)
+───────────────────────────────────────────────────────────── */
+.awards-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+.award-card {
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; transition: border-color 0.3s;
+}
+.award-card:hover { border-color: var(--border-bright); }
+.award-icon {
+  width: 40px; height: 40px; background: var(--teal-glow);
+  border: 1px solid var(--border-bright); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: var(--teal); flex-shrink: 0;
+}
+/* Amber variant for hackathon trophy */
+.award-icon.amber {
+  background: rgba(245,166,35,0.1);
+  border-color: rgba(245,166,35,0.25);
+  color: var(--amber);
+}
+.award-body { flex: 1; }
+.award-title {
+  font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.2rem;
+}
+.award-meta {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  color: var(--text-muted); letter-spacing: 0.06em;
+}
+.award-badge {
+  font-family: var(--font-mono); font-size: 0.62rem; padding: 0.2rem 0.55rem;
+  border-radius: 3px; background: rgba(0,212,170,0.1); color: var(--teal);
+  border: 1px solid rgba(0,212,170,0.2); white-space: nowrap;
+  align-self: center; flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE BREAKPOINTS
+───────────────────────────────────────────────────────────── */
+
+/* Tablet (≤1024px): drop services from 3 columns to 2 */
+@media (max-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Mobile (≤900px): single-column layout throughout */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+
+  /* Mobile nav dropdown */
+  .nav-links {
+    display: none; position: fixed;
+    top: 62px; left: 0; right: 0;
+    background: rgba(8,12,18,0.97); backdrop-filter: blur(20px);
+    flex-direction: column; padding: 1.5rem 2rem; gap: 1.25rem;
+    border-bottom: 1px solid var(--border); z-index: 99;
+  }
+  .nav-links.open { display: flex; }
+  .nav-right .nav-resume { display: none; }
+  .nav-mobile-btn { display: flex; }
+
+  .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+  section { padding: 4rem 1.5rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-card.featured { grid-template-columns: 1fr; }
+
+  /* Timeline mobile: two-column → single column */
+  .exp-item { grid-template-columns: 1fr; gap: 0.25rem 0; }
+  .exp-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border-bright);
+    text-align: left; padding-right: 0; padding-bottom: 0.75rem; padding-left: 1.5rem;
+  }
+  .exp-left::after { right: auto; left: -5px; top: 50%; transform: translateY(-50%); }
+  .exp-right { padding-left: 1.5rem; margin-top: 0.75rem; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+
+  /* Inner pages */
+  .page-hero { padding: 5rem 1.5rem 2.5rem; }
+  .education-grid { grid-template-columns: 1fr; }
+  .award-card { flex-direction: column; gap: 0.75rem; }
+  .award-badge { align-self: flex-start; }
+}

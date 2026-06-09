@@ -1,0 +1,135 @@
+<!--
+  about.html — Personal story and background page for Diego Caputi (Portfolio Site)
+
+  Purpose:
+    The human-side differentiator. Most dev portfolios skip this page entirely.
+    Audience: potential clients and hiring managers who want to understand the
+    person behind the work — background, values, and what drives the approach.
+
+  Page flow (top → bottom):
+    Nav → Page Hero → Bio & Story → Skills → Footer
+
+  Dependencies (CDN only — no build step required):
+    - Google Fonts: Syne (headings), DM Mono (code labels), DM Sans (body) — via styles.css
+    - styles.css: portfolio-specific dark teal design system
+    - script.js: scroll animations + mobile nav toggle
+
+  Author: Diego Caputi
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Diego Caputi — About</title>
+
+<!-- Preconnect cuts DNS + TLS latency for Google Fonts before the stylesheet request fires -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<!-- Portfolio-specific dark teal design system -->
+<link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+
+<!-- ─────────────────────────────────────────────────────────────
+     NAV
+     Cross-page navigation. "About" link gets nav-active to
+     indicate the current page. "Hire Me" links back to the
+     contact form on the home page.
+───────────────────────────────────────────────────────────── -->
+<nav id="main-nav">
+  <a href="index.html" class="nav-logo">Diego<span>.</span></a>
+
+  <!-- On mobile this list is hidden until the hamburger button adds class "open" -->
+  <ul class="nav-links" id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="nav-active">About</a></li>
+    <li><a href="resume.html">Experience</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <!-- TODO: Drop resume.pdf into this folder to enable the download button -->
+    <a href="DC_CV.pdf" download class="nav-resume">Resume ↓</a>
+    <a href="index.html#contact" class="nav-cta">Hire Me</a>
+
+    <!-- Three <span> bars animate into an X via CSS when class "open" is added by JS -->
+    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─────────────────────────────────────────────────────────────
+     PAGE HERO
+     Compact header mirroring the home hero atmosphere at reduced scale.
+───────────────────────────────────────────────────────────── -->
+<section class="page-hero">
+  <!-- Decorative 60×60px teal grid overlay at 3% opacity — same as home hero -->
+  <div class="hero-grid-bg"></div>
+  <p class="section-tag">// Who I am</p>
+  <h1 class="page-hero-title">About <em>Diego</em></h1>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────
+     BIO & STORY
+     Two-column layout (1.2fr text / 1fr sidebar) using .about-grid.
+     Left: 6 bio paragraphs. Right: language proficiency + work philosophy.
+───────────────────────────────────────────────────────────── -->
+<section id="story">
+  <div class="about-grid">
+
+    <!-- Left column: personal story -->
+    <div class="about-text fade-up">
+      <div class="section-header" style="margin-bottom: 2rem;">
+        <p class="section-tag">// Background</p>
+        <h2 class="section-title">From the Water to the Code</h2>
+      </div>
+
+      <p>Surfing, Spartan races, triathlons, mountain biking. If there's a finish line or a wave, I'm interested.</p>
+
+      <p>I grew up racing sailboats in Miami and eventually captained charter vessels — experiences that taught me early that conditions are never perfect and solutions that only work in theory rarely survive contact with reality. That mindset has shaped everything I've built since.</p>
+
+      <p>My engineering journey didn't start in a classroom. In 2013 I helped build iLash &amp; Skincare from the ground up, taking an idea from concept to operation. Over the next decade I wore just about every hat imaginable: business formation, licensing, marketing, Google Ads, web development, IT infrastructure, and technical leadership. Every challenge demanded a solution, and more often than not, technology was the most effective answer.</p>
+
+      <p>After years of solving real-world business problems through technology, I decided to formalize the skills I had developed in practice. I returned to school while working full-time, earning a <strong>B.S. in Computer Science with a concentration in Information Security</strong>, followed by <strong>CompTIA Security+</strong> certification. The degree strengthened the foundation. The experience had already built it.</p>
+
+      <p>Today, I develop full-stack software and consult on IT security for small and mid-sized businesses. I enjoy building practical solutions that create measurable impact — whether that's improving operations, strengthening security, or helping organizations leverage modern tools, including AI, to move faster from idea to execution.</p>
+
+      <p>Miami-born. Still here. Still building.</p>
+    </div>
+
+    <!-- Right column: languages + philosophy -->
+    <div class="fade-up">
+
+      <!-- Work philosophy callout box -->
+      <div class="philosophy-box">
+        <p class="philosophy-box-label">// Work style</p>
+        <div class="philosophy-traits">
+          <span class="skill-chip">Morning deep work</span>
+          <span class="skill-chip">Self-directed</span>
+          <span class="skill-chip">Mission-driven</span>
+          <span class="skill-chip">Customer-first</span>
+          <span class="skill-chip">Real-world impact</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p class="footer-name">Diego<span>.</span>Caputi</p>
+  <p>Miami, FL &nbsp;·&nbsp; Available Remote &nbsp;·&nbsp; D.Caputi001@gmail.com</p>
+</footer>
+
+<!-- Shared interactivity: scroll animations + mobile nav toggle -->
+<script src="script.js"></script>
+
+</body>
+</html>
