@@ -39,6 +39,8 @@
 
 </head>
 <body>
+<!-- WCAG 2.4.1: Skip link lets keyboard users bypass the fixed nav and jump to main content -->
+<a href="#home" class="skip-link">Skip to main content</a>
 
 <!-- ─────────────────────────────────────────────────────────────
      NAV
@@ -62,7 +64,8 @@
     <a href="#contact" class="nav-cta">Hire Me</a>
 
     <!-- Three <span> bars animate into an X via CSS when class "open" is added by JS -->
-    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu">
+    <!-- WCAG 4.1.2: aria-expanded tells screen readers whether the menu is open or closed -->
+    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
       <span></span>
       <span></span>
       <span></span>
@@ -149,7 +152,8 @@
   <div class="services-grid fade-up">
 
     <div class="service-card">
-      <div class="service-icon">⚙</div>
+      <!-- WCAG 1.1.1: icon is decorative — parent card has a visible title, so hide from screen readers -->
+      <div class="service-icon" aria-hidden="true">⚙</div>
       <p class="service-title">Full-Stack Development</p>
       <p class="service-desc">End-to-end web applications from requirements to production — React, Node.js, TypeScript, PostgreSQL. Secure by default, built to scale.</p>
       <div class="service-tags">
@@ -159,7 +163,7 @@
     </div>
 
     <div class="service-card">
-      <div class="service-icon">🔒</div>
+      <div class="service-icon" aria-hidden="true">🔒</div>
       <p class="service-title">IT Security Consulting</p>
       <p class="service-desc">Security gap analysis, OWASP-based code reviews, RBAC/RLS implementation, and infrastructure assessments for small and mid-sized businesses.</p>
       <div class="service-tags">
@@ -169,7 +173,7 @@
     </div>
 
     <div class="service-card">
-      <div class="service-icon">🏗</div>
+      <div class="service-icon" aria-hidden="true">🏗</div>
       <p class="service-title">IT Operations &amp; Infrastructure</p>
       <p class="service-desc">Microsoft 365 rollouts, IT infrastructure design, process documentation, and staff training — practical systems that actually get adopted.</p>
       <div class="service-tags">
@@ -213,9 +217,10 @@
         </div>
         <div class="project-links">
           <!-- TODO: Replace # with actual URLs before going live -->
-          <a href="https://devpost.com/software/callvance" class="project-link" target="_blank" rel="noopener">DevPost ↗</a>
-          <a href="#" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
-          <a href="https://callvance.net/" class="project-link ghost" target="_blank" rel="noopener">Live Demo ↗</a>
+          <!-- WCAG 2.4.6: aria-label disambiguates repeated link text across project cards -->
+          <a href="https://devpost.com/software/callvance" class="project-link" target="_blank" rel="noopener" aria-label="CallVance on DevPost">DevPost ↗</a>
+          <a href="#" class="project-link ghost" target="_blank" rel="noopener" aria-label="CallVance GitHub repository">GitHub ↗</a>
+          <a href="https://callvance.net/" class="project-link ghost" target="_blank" rel="noopener" aria-label="CallVance live demo">Live Demo ↗</a>
         </div>
       </div>
       <!-- Metadata sidebar: only visible on the featured card layout -->
@@ -245,8 +250,8 @@
       </div>
       <div class="project-links">
         <!-- TODO: Replace # with GitHub URL -->
-        <a href="https://dcaputi001.github.io/shelfchef_docs/index.html" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
-        <a href="https://devpost.com/software/shelfchef" class="project-link" target="_blank" rel="noopener">DevPost ↗</a>
+        <a href="https://dcaputi001.github.io/shelfchef_docs/index.html" class="project-link ghost" target="_blank" rel="noopener" aria-label="ShelfChef documentation and GitHub">GitHub ↗</a>
+        <a href="https://devpost.com/software/shelfchef" class="project-link" target="_blank" rel="noopener" aria-label="ShelfChef on DevPost">DevPost ↗</a>
       </div>
     </div>
 
@@ -260,7 +265,7 @@
       </div>
       <div class="project-links">
         <!-- TODO: Replace # with GitHub URL -->
-        <a href="https://dcaputi001.github.io/index.html" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://dcaputi001.github.io/index.html" class="project-link ghost" target="_blank" rel="noopener" aria-label="Financial Planner GitHub">GitHub ↗</a>
       </div>
     </div>
 
@@ -274,7 +279,7 @@
       </div>
       <div class="project-links">
         <!-- TODO: Replace # with GitHub URL -->
-        <a href="https://github.com/DCaputi001/Payment_Tracker" class="project-link ghost" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://github.com/DCaputi001/Payment_Tracker" class="project-link ghost" target="_blank" rel="noopener" aria-label="Payment Tracker GitHub repository">GitHub ↗</a>
       </div>
     </div>
 
@@ -315,21 +320,22 @@
       <!-- Each row is an <a> so the entire card is clickable -->
       <div class="contact-methods">
         <a href="mailto:D.Caputi001@gmail.com" class="contact-method">
-          <div class="cm-icon">✉</div>
+          <!-- WCAG 1.1.1: icon is decorative — the link text includes label and value -->
+          <div class="cm-icon" aria-hidden="true">✉</div>
           <div>
             <p class="cm-label">Email</p>
             <p class="cm-value">D.Caputi001@gmail.com</p>
           </div>
         </a>
         <a href="https://linkedin.com/in/diego-caputi" target="_blank" rel="noopener" class="contact-method">
-          <div class="cm-icon">in</div>
+          <div class="cm-icon" aria-hidden="true">in</div>
           <div>
             <p class="cm-label">LinkedIn</p>
             <p class="cm-value">linkedin.com/in/diego-caputi</p>
           </div>
         </a>
         <a href="https://github.com/DCaputi001" target="_blank" rel="noopener" class="contact-method">
-          <div class="cm-icon" style="font-size:1.1rem;">⌥</div>
+          <div class="cm-icon" style="font-size:1.1rem;" aria-hidden="true">⌥</div>
           <div>
             <p class="cm-label">GitHub</p>
             <p class="cm-value">github.com/DCaputi001</p>
@@ -380,8 +386,9 @@
 
       <button type="submit" class="form-submit" id="form-btn">Send Message →</button>
 
-      <p id="form-success" style="display:none; color:var(--teal); font-size:0.85rem; font-family:var(--font-mono); margin-top:0.5rem;">// Message sent. I'll be in touch soon.</p>
-      <p id="form-error"   style="display:none; color:var(--red);  font-size:0.85rem; font-family:var(--font-mono); margin-top:0.5rem;">// Something went wrong. Email me directly at D.Caputi001@gmail.com.</p>
+      <!-- WCAG 4.1.3: aria-live announces these messages to screen readers when they appear -->
+      <p id="form-success" aria-live="polite" aria-atomic="true" style="display:none; color:var(--teal); font-size:0.85rem; font-family:var(--font-mono); margin-top:0.5rem;">// Message sent. I'll be in touch soon.</p>
+      <p id="form-error"   aria-live="polite" aria-atomic="true" style="display:none; color:var(--red);  font-size:0.85rem; font-family:var(--font-mono); margin-top:0.5rem;">// Something went wrong. Email me directly at D.Caputi001@gmail.com.</p>
     </form>
 
   </div> -->

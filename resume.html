@@ -34,6 +34,8 @@
 
 </head>
 <body>
+<!-- WCAG 2.4.1: Skip link lets keyboard users bypass the fixed nav and jump to main content -->
+<a href="#experience" class="skip-link">Skip to main content</a>
 
 <!-- ─────────────────────────────────────────────────────────────
      NAV
@@ -55,7 +57,8 @@
     <a href="index.html#contact" class="nav-cta">Hire Me</a>
 
     <!-- Three <span> bars animate into an X via CSS when class "open" is added by JS -->
-    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu">
+    <!-- WCAG 4.1.2: aria-expanded tells screen readers whether the menu is open or closed -->
+    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
       <span></span>
       <span></span>
       <span></span>
@@ -206,7 +209,8 @@
     <div class="fade-up">
 
       <div class="skills-group">
-        <p class="skills-group-title">Frontend</p>
+        <!-- WCAG 1.3.1: semantic h3 headings allow screen reader users to navigate skill groups by heading -->
+        <h3 class="skills-group-title">Frontend</h3>
         <div class="skills-list">
           <span class="skill-chip">React 18</span>
           <span class="skill-chip">TypeScript</span>
@@ -221,7 +225,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Backend</p>
+        <h3 class="skills-group-title">Backend</h3>
         <div class="skills-list">
           <span class="skill-chip">Node.js</span>
           <span class="skill-chip">Fastify</span>
@@ -234,7 +238,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Mobile</p>
+        <h3 class="skills-group-title">Mobile</h3>
         <div class="skills-list">
           <span class="skill-chip">Kotlin</span>
           <span class="skill-chip">Jetpack Compose</span>
@@ -247,7 +251,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Databases</p>
+        <h3 class="skills-group-title">Databases</h3>
         <div class="skills-list">
           <span class="skill-chip">PostgreSQL</span>
           <span class="skill-chip">Supabase</span>
@@ -260,7 +264,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Security</p>
+        <h3 class="skills-group-title">Security</h3>
         <div class="skills-list">
           <span class="skill-chip">OWASP Top 10</span>
           <span class="skill-chip">RBAC / RLS</span>
@@ -278,7 +282,7 @@
     <div class="fade-up">
 
       <div class="skills-group">
-        <p class="skills-group-title">Cloud &amp; DevOps</p>
+        <h3 class="skills-group-title">Cloud &amp; DevOps</h3>
         <div class="skills-list">
           <span class="skill-chip">AWS (S3 · CloudFront)</span>
           <span class="skill-chip">Microsoft Azure</span>
@@ -290,7 +294,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">AI &amp; Tools</p>
+        <h3 class="skills-group-title">AI &amp; Tools</h3>
         <div class="skills-list">
           <span class="skill-chip">Claude Code</span>
           <span class="skill-chip">GitHub Copilot</span>
@@ -301,7 +305,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Testing</p>
+        <h3 class="skills-group-title">Testing</h3>
         <div class="skills-list">
           <span class="skill-chip">Unit Testing</span>
           <span class="skill-chip">Integration Testing</span>
@@ -312,7 +316,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Operations</p>
+        <h3 class="skills-group-title">Operations</h3>
         <div class="skills-list">
           <span class="skill-chip">IT Infrastructure</span>
           <span class="skill-chip">Process Design</span>
@@ -324,7 +328,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Programming Languages</p>
+        <h3 class="skills-group-title">Programming Languages</h3>
         <div class="skills-list">
           <span class="skill-chip">TypeScript</span>
           <span class="skill-chip">JavaScript (ES6+)</span>
@@ -336,7 +340,7 @@
       </div>
 
       <div class="skills-group">
-        <p class="skills-group-title">Spoken Languages</p>
+        <h3 class="skills-group-title">Spoken Languages</h3>
         <div class="lang-list">
           <div class="lang-item">
             <span class="lang-name">English</span>
@@ -429,7 +433,8 @@
 
     <!-- CompTIA Security+ -->
     <div class="award-card">
-      <div class="award-icon">🔒</div>
+      <!-- WCAG 1.1.1: icon is decorative — the award title provides the same information -->
+      <div class="award-icon" aria-hidden="true">🔒</div>
       <div class="award-body">
         <p class="award-title">CompTIA Security+</p>
         <p class="award-meta">May 2026</p>
@@ -439,7 +444,7 @@
 
     <!-- Atlassian Agile PM Certificate -->
     <div class="award-card">
-      <div class="award-icon">📋</div>
+      <div class="award-icon" aria-hidden="true">📋</div>
       <div class="award-body">
         <p class="award-title">Agile Project Management Professional Certificate</p>
         <p class="award-meta">September 2024 · Atlassian</p>
@@ -448,7 +453,7 @@
 
     <!-- Hackathon award — amber accent signals achievement -->
     <div class="award-card">
-      <div class="award-icon amber">🏆</div>
+      <div class="award-icon amber" aria-hidden="true">🏆</div>
       <div class="award-body">
         <p class="award-title">6th Place Overall &amp; Best Startup</p>
         <p class="award-meta">World's Largest Hackathon presented by Bolt — 100,000+ submissions</p>
@@ -458,7 +463,7 @@
 
     <!-- President's List — multiple semesters -->
     <div class="award-card">
-      <div class="award-icon">⭐</div>
+      <div class="award-icon" aria-hidden="true">⭐</div>
       <div class="award-body">
         <p class="award-title">President's List</p>
         <p class="award-meta">Summer 2023 · Fall 2023 · Spring 2023 · Summer 2024 · Fall 2024 · Spring 2024</p>
@@ -468,7 +473,7 @@
 
     <!-- Summa Cum Laude -->
     <div class="award-card">
-      <div class="award-icon">🎓</div>
+      <div class="award-icon" aria-hidden="true">🎓</div>
       <div class="award-body">
         <p class="award-title">Summa Cum Laude</p>
         <p class="award-meta">B.S. Computer Science, Information Security · SNHU · December 2025</p>

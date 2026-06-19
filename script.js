@@ -79,6 +79,8 @@ const navLinks  = document.getElementById('nav-links');
 navToggle.addEventListener('click', () => {
   navToggle.classList.toggle('open');
   navLinks.classList.toggle('open');
+  // WCAG 4.1.2: keep aria-expanded in sync so screen readers announce open/closed state
+  navToggle.setAttribute('aria-expanded', navLinks.classList.contains('open').toString());
 });
 
 // Close the dropdown when the user selects any nav link
@@ -86,7 +88,18 @@ navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     navToggle.classList.remove('open');
     navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
   });
+});
+
+// WCAG 2.1.1: Escape key closes the mobile menu and returns focus to the toggle button
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+    navToggle.classList.remove('open');
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.focus();
+  }
 });
 
 

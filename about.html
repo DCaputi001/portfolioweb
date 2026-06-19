@@ -32,6 +32,8 @@
 
 </head>
 <body>
+<!-- WCAG 2.4.1: Skip link lets keyboard users bypass the fixed nav and jump to main content -->
+<a href="#story" class="skip-link">Skip to main content</a>
 
 <!-- ─────────────────────────────────────────────────────────────
      NAV
@@ -56,7 +58,8 @@
     <a href="index.html#contact" class="nav-cta">Hire Me</a>
 
     <!-- Three <span> bars animate into an X via CSS when class "open" is added by JS -->
-    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu">
+    <!-- WCAG 4.1.2: aria-expanded tells screen readers whether the menu is open or closed -->
+    <button class="nav-mobile-btn" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
       <span></span>
       <span></span>
       <span></span>
